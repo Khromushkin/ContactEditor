@@ -114,20 +114,21 @@ package pl.mllr.extensions.contactEditor
 		 * 
 		 *
 		 * @param recordId - id of contact
+		 * @param isThumbnail - need thumbnail or full-size photo
 		 */
-		public function getContactBitmapData(recordId:int):BitmapData
+		public function getContactBitmapData(recordId:int, isThumbnail:Boolean = false):BitmapData
 		{
+			var bitmapData:BitmapData;
 			try{
 				//BitmapData is created on as3 side, since i have no idea how to do this in objective c
 				//First we get the dimensions of the image
-				var point:Point=context.call("getBitmapDimensions",recordId) as Point;
+				var point:Point = context.call("getBitmapDimensions", recordId, isThumbnail) as Point;
 				if(point && point.x>0)
 				{
 					//then we create the bitmapdata of specified size
-					var bmp:BitmapData=new BitmapData(point.x,point.y);
+					bitmapData = new BitmapData(point.x, point.y);
 					//and transfer the actual image to it
-					context.call("drawToBitmap",bmp,recordId);
-					return bmp;
+					context.call("drawToBitmap", bitmapData, recordId, isThumbnail);
 				}
 				
 			}catch(error:Error){
@@ -136,7 +137,10 @@ package pl.mllr.extensions.contactEditor
 				else
 					throw new Error(error.message,error.errorID);
 			}
-			return null;
+			finally {
+				return bitmapData;
+			}
+			return bitmapData;
 		}
 		
 		/**
