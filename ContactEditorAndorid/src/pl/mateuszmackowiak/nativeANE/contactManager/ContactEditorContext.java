@@ -31,6 +31,8 @@ public class ContactEditorContext extends FREContext{
         map.put(removeContact.KEY, new removeContact());
         map.put(newContact.KEY, new newContact());
         map.put(pickContact.KEY, new pickContact());
+        map.put(getBitmapDimensions.KEY, new getBitmapDimensions());
+        map.put(drawToBitmap.KEY, new drawToBitmap());
         map.put(getContactsSimple.KEY, new getContactsSimple());
         map.put(getContactDetails.KEY, new getContactDetails());
         map.put(isSupportedFunction.KEY, new isSupportedFunction());
